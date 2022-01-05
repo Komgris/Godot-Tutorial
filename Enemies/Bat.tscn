@@ -43,7 +43,7 @@ radius = 7.0
 height = 4.0
 
 [sub_resource type="CircleShape2D" id=9]
-radius = 27.0185
+radius = 72.2496
 
 [node name="Bat" type="KinematicBody2D"]
 collision_layer = 16
@@ -52,6 +52,7 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "Fly"
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -71,13 +72,13 @@ shape = SubResource( 8 )
 [node name="Stats" parent="." instance=ExtResource( 5 )]
 max_health = 2
 
-[node name="PlayerDetection" parent="." instance=ExtResource( 6 )]
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
 
-[node name="CollisionShape2D" parent="PlayerDetection" index="0"]
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 shape = SubResource( 9 )
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 
 [editable path="HurtBox"]
-[editable path="PlayerDetection"]
+[editable path="PlayerDetectionZone"]
