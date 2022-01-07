@@ -14,13 +14,16 @@ enum{
 var state =	MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
+var stats = PlayerStats
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitbox = $HitboxPivot/SwordHitbox
+onready var hurtBox = $HurtBox
 
 func _ready():
+	stats.connect("no_health",self,"queue_free")
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 
@@ -78,7 +81,7 @@ func attack_animation_finished():
 	velocity = velocity * 0.8
 	state = MOVE
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_HurtBox_area_entered(area):
+	stats.health -= 1
+	hurtBox.start_invincibility(0.5)
+	hurtBox.create_hit_effect()
